@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wonderlog Dashboard
+
+A modern content management dashboard for authors of the Wonderlog blogging platform, built with Next.js and Tailwind CSS.
+
+## Related Repositories
+
+- [Wonderlog API](https://github.com/bereketkib/wonderlog-api) - Backend API
+- [Wonderlog Web](https://github.com/bereketkib/wonderlog-web) - Main web application
+
+## Features
+
+- **Author Dashboard**
+
+  - Overview statistics
+  - Post analytics
+  - Comment management
+  - View tracking
+
+- **Content Management**
+
+  - Create and edit posts
+  - Rich text editor with formatting
+  - Draft/publish workflow
+  - Post preview
+  - Bulk actions
+
+- **Comment System**
+
+  - Comment moderation
+  - Bulk comment management
+  - Comment analytics
+  - User interaction tracking
+
+- **Analytics Dashboard**
+  - Post performance metrics
+  - View counts
+  - Comment statistics
+  - Real-time updates
+
+## Tech Stack
+
+- **Framework:** Next.js 14
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Editor:** TipTap
+- **Icons:** Heroicons, Lucide
+- **State Management:** React Context
+- **HTTP Client:** Axios
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+
+```bash
+git clone https://github.com/bereketkib/wonderlog-dashboard.git
+cd wonderlog-dashboard
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Set up environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+Required environment variables:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_WEB_URL=http://localhost:3001
+```
+
+4. Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```plaintext
+src/
+├── app/                # Next.js app router pages
+│   ├── dashboard/     # Dashboard routes
+│   ├── api/          # API routes
+│   └── layout.tsx    # Root layout
+├── components/       # Reusable components
+│   ├── ui/          # UI components
+│   └── RichTextEditor.tsx
+├── context/         # React contexts
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
+├── services/        # API services
+└── styles/         # Global styles
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key Features
 
-## Learn More
+### Dashboard Overview
 
-To learn more about Next.js, take a look at the following resources:
+- Total posts count
+- Published vs draft posts
+- Recent comments
+- View statistics
+- Quick actions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Post Management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Rich text editor
+- Draft/publish toggle
+- Content validation
+- Image handling
+- Post preview
 
-## Deploy on Vercel
+### Comment Moderation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Approve/reject comments
+- Bulk actions
+- User management
+- Spam protection
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Theme Support
+
+- Light/dark mode
+- System preference sync
+- Persistent settings
+- Smooth transitions
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch ( git checkout -b feature/amazing-feature )
+3. Commit your changes ( git commit -m 'Add amazing feature' )
+4. Push to the branch ( git push origin feature/amazing-feature )
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Author
+
+Bereket Kibreab
+
+## Acknowledgments
+
+- Next.js team
+- TailwindCSS team
+- TipTap team
+
+```plaintext
+
+This README:
+- Reflects the actual features implemented in the dashboard
+- Matches the structure of your other READMEs
+- Includes accurate tech stack information
+- Provides clear setup instructions
+- Details the project structure
+- Lists all major features
+- Maintains consistency with your branding
+```
