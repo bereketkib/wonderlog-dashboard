@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const theme = searchParams.get("theme");
 
   if (!token || !userData) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/error", request.url));
   }
 
   try {
@@ -16,27 +16,42 @@ export async function GET(request: NextRequest) {
       throw new Error("Only authors can access the dashboard");
     }
 
+    // Sanitize the userData to prevent XSS
+    const sanitizedUserData = JSON.stringify(userData)
+      .replace(/</g, "\\u003c")
+      .replace(/>/g, "\\u003e");
+
     const script = `
-      localStorage.clear();
-      localStorage.setItem('accessToken', '${token}');
-      localStorage.setItem('user', '${userData}');
-      localStorage.setItem('theme', '${theme || "light"}');
-      if ("${theme}" === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-      window.location.href = '/dashboard';
+      try {
+        localStorage.clear();
+        localStorage.setItem('accessToken', '${token}');
+        localStorage.setItem('user', ${sanitizedUserData});
+        localStorage.setItem('theme', '${theme || "light"}');
+        
+        if ("${theme}" === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        window.location.href = '/dashboard';
+      } catch (err) {
+        console.error('Transfer error:', err);
+        window.location.href = '/login';
+      }
     `;
 
     return new NextResponse(
-      `<!DOCTYPE html><html><body><script>${script}</script></body></html>`,
+      `<!DOCTYPE html><html><head><title>Redirecting...</title></head><body><script>${script}</script></body></html>`,
       {
-        headers: { "Content-Type": "text/html" },
+        headers: {
+          "Content-Type": "text/html",
+          "Cache-Control": "no-store, no-cache, must-revalidate",
+        },
       }
     );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.redirect(new URL("/login", request.url));
+  } catch (err) {
+    console.error("Transfer error:", err);
+    return NextResponse.redirect(new URL("/error", request.url));
   }
 }
