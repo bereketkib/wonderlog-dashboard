@@ -51,6 +51,7 @@ export default function NewPostPage() {
       await postsService.createPost({ title, content, published });
       router.push("/dashboard/posts");
     } catch (error) {
+      console.error("Failed to create post:", error);
       setError("Failed to create post");
     } finally {
       setLoading(false);

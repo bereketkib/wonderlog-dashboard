@@ -34,9 +34,9 @@ export default function ErrorPage() {
             Access denied!
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
-            You are not authorized to access the author's dashboard. Please log
-            in to Wonderlog first, then navigate to the dashboard through the
-            link on your profile page.
+            You are not authorized to access the author&apos;s dashboard. Please
+            log in to Wonderlog first, then navigate to the dashboard through
+            the link on your profile page.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">

@@ -13,6 +13,16 @@ import {
 import Link from "next/link";
 import Select from "react-select";
 
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+interface PostOption {
+  id: string;
+  title: string;
+}
+
 export default function CommentsPage() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +38,7 @@ export default function CommentsPage() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const selectStyles = {
-    control: (base: any) => ({
+    control: (base: Record<string, unknown>) => ({
       ...base,
       backgroundColor: "transparent",
       borderColor: "rgb(229 231 235)", // gray-200
@@ -51,7 +61,7 @@ export default function CommentsPage() {
       },
     }),
     option: (
-      base: any,
+      base: Record<string, unknown>,
       state: { isSelected: boolean; isFocused: boolean }
     ) => ({
       ...base,
@@ -74,7 +84,7 @@ export default function CommentsPage() {
         color: state.isSelected ? "white" : "rgb(243 244 246)", // gray-100
       },
     }),
-    menu: (base: any) => ({
+    menu: (base: Record<string, unknown>) => ({
       ...base,
       backgroundColor: "white",
       borderColor: "rgb(229 231 235)", // gray-200
@@ -86,28 +96,28 @@ export default function CommentsPage() {
         borderColor: "rgb(55 65 81)", // gray-700
       },
     }),
-    singleValue: (base: any) => ({
+    singleValue: (base: Record<string, unknown>) => ({
       ...base,
       color: "rgb(17 24 39)", // gray-900
       ".dark &": {
         color: "white",
       },
     }),
-    input: (base: any) => ({
+    input: (base: Record<string, unknown>) => ({
       ...base,
       color: "rgb(17 24 39)", // gray-900
       ".dark &": {
         color: "white",
       },
     }),
-    placeholder: (base: any) => ({
+    placeholder: (base: Record<string, unknown>) => ({
       ...base,
       color: "rgb(156 163 175)", // gray-400
       ".dark &": {
         color: "rgb(156 163 175)", // gray-400
       },
     }),
-    dropdownIndicator: (base: any) => ({
+    dropdownIndicator: (base: Record<string, unknown>) => ({
       ...base,
       color: "rgb(156 163 175)", // gray-400
       "&:hover": {
@@ -120,7 +130,7 @@ export default function CommentsPage() {
         },
       },
     }),
-    clearIndicator: (base: any) => ({
+    clearIndicator: (base: Record<string, unknown>) => ({
       ...base,
       color: "rgb(156 163 175)", // gray-400
       "&:hover": {
@@ -164,8 +174,8 @@ export default function CommentsPage() {
       );
       setSelectedComments(new Set());
       setIsDeleteModalOpen(false);
-    } catch (error) {
-      console.error("Delete error:", error);
+    } catch (err) {
+      console.error("Delete error:", err);
       setError("Failed to delete comments");
     } finally {
       setIsDeleting(false);
@@ -179,6 +189,7 @@ export default function CommentsPage() {
         await fetchPosts();
         await fetchComments();
       } catch (error) {
+        console.error("Failed to load comments:", error);
         setError("Failed to load data");
       } finally {
         setLoading(false);
@@ -186,7 +197,7 @@ export default function CommentsPage() {
     };
 
     loadData();
-  }, [sort, selectedPostId]);
+  }, [sort, selectedPostId, search]);
 
   const fetchPosts = async () => {
     try {
@@ -224,6 +235,7 @@ export default function CommentsPage() {
     try {
       await fetchComments();
     } catch (error) {
+      console.error("Failed to search comments:", error);
       setError("Failed to search comments");
     } finally {
       setLoading(false);
@@ -291,10 +303,12 @@ export default function CommentsPage() {
                   ? posts.find((post) => post.id === selectedPostId)
                   : null
               }
-              onChange={(option: any) => setSelectedPostId(option?.id || "")}
+              onChange={(option: PostOption | null) =>
+                setSelectedPostId(option?.id || "")
+              }
               options={posts}
-              getOptionLabel={(option: any) => option.title}
-              getOptionValue={(option: any) => option.id}
+              getOptionLabel={(option: PostOption) => option.title}
+              getOptionValue={(option: PostOption) => option.id}
               isClearable
               placeholder="All Posts"
               className="w-96"
@@ -315,8 +329,8 @@ export default function CommentsPage() {
                 value: sort,
                 label: sort === "newest" ? "Newest First" : "Oldest First",
               }}
-              onChange={(option: any) =>
-                setSort(option?.value as "newest" | "oldest")
+              onChange={(option: SelectOption | null) =>
+                setSort((option?.value as "newest" | "oldest") || "newest")
               }
               options={[
                 { value: "newest", label: "Newest First" },

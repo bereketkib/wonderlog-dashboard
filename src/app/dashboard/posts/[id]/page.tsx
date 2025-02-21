@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { IndividualPost, postsService } from "@/services/posts";
 import PostContent from "@/components/PostContent";
 
 export default function PostPage() {
-  const router = useRouter();
   const params = useParams();
   const [post, setPost] = useState<IndividualPost | null>(null);
   const [loading, setLoading] = useState(true);

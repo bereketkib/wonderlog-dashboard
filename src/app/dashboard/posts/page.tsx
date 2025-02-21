@@ -31,6 +31,7 @@ export default function PostsPage() {
       const data = await postsService.getPosts();
       setPosts(data.posts); // Access the posts array from the paginated response
     } catch (error) {
+      console.error("Error fetching posts:", error);
       setError("Failed to load posts");
     } finally {
       setLoading(false);
@@ -51,6 +52,7 @@ export default function PostsPage() {
       setPosts(posts.filter((post) => post.id !== postToDelete));
       setIsDeleteModalOpen(false);
     } catch (error) {
+      console.error("Error deleting post:", error);
       setError("Failed to delete post");
     } finally {
       setIsDeleting(false);

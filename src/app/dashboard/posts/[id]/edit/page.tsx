@@ -30,6 +30,7 @@ export default function EditPostPage() {
         setContent(post.content);
         setPublished(post.published);
       } catch (error) {
+        console.error(error);
         setError("Failed to load post");
       } finally {
         setLoading(false);
@@ -55,6 +56,7 @@ export default function EditPostPage() {
       await postsService.updatePost(postId, { title, content, published });
       router.push("/dashboard/posts");
     } catch (error) {
+      console.error(error);
       setError("Failed to update post");
     } finally {
       setSaving(false);

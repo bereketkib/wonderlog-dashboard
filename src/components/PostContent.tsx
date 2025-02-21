@@ -12,7 +12,6 @@ import {
   ChatBubbleLeftRightIcon,
   UserCircleIcon,
   ExclamationTriangleIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 interface PostContentProps {
@@ -31,6 +30,7 @@ export default function PostContent({ post }: PostContentProps) {
       await postsService.deletePost(post.id);
       router.push("/dashboard/posts");
     } catch (error) {
+      console.error("Error deleting post:", error);
       setError("Failed to delete post");
       setIsDeleting(false);
     }
