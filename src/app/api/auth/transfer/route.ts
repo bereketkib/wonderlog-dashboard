@@ -16,7 +16,6 @@ export async function GET(request: NextRequest) {
       throw new Error("Only authors can access the dashboard");
     }
 
-    // Sanitize the userData to prevent XSS
     const sanitizedUserData = JSON.stringify(userData)
       .replace(/</g, "\\u003c")
       .replace(/>/g, "\\u003e");
@@ -37,7 +36,7 @@ export async function GET(request: NextRequest) {
         window.location.href = '/dashboard';
       } catch (err) {
         console.error('Transfer error:', err);
-        window.location.href = '/login';
+        window.location.href = '/error';
       }
     `;
 
