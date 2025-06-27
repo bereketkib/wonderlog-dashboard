@@ -153,14 +153,3 @@ Bereket Kibreab
 - TailwindCSS team
 - TipTap team
 
-```plaintext
-
-This README:
-- Reflects the actual features implemented in the dashboard
-- Matches the structure of your other READMEs
-- Includes accurate tech stack information
-- Provides clear setup instructions
-- Details the project structure
-- Lists all major features
-- Maintains consistency with your branding
-```
